@@ -1,3 +1,4 @@
+# https://www.youtube.com/watch?v=94mV7Fmbx88&t=84s
 smallstart = 4
 bigstart = 7
 
