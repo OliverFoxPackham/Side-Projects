@@ -3,7 +3,7 @@
 using namespace std;
 
 int stove_on = 1;
-int cans = 5;
+int cans = 6;
 int found_bugs = 0;
 int gassed = 1;
 int done = 0;
@@ -17,6 +17,7 @@ int living_room();
 int kitchen();
 int bathroom();
 int bedroom();
+int dining_room();
 int entryway();
 
 
@@ -69,6 +70,9 @@ int main(){
 				break;
 			case 11:
 				room = entryway();
+				break;
+			case 17:
+				room = dining_room();
 				break;
 			case 13:
 				cout << "congratulations! you have exterminated the bugs! you get to keep your job today!" << endl;
@@ -135,8 +139,8 @@ int kitchen(){
 		stove_on = 0;
 	}
 	cout << "actions available: "; 
-	if (last != 11)
-		cout << "entryway, ";
+	if (last != 17)
+		cout << "dining_room, ";
 	if (last != 5)
 		cout << "bathroom, ";
 	if (last != 2)
@@ -150,12 +154,12 @@ int kitchen(){
 		cout << "the room has been gassed, you need to leave, where would you like to go?" << endl;
 		cin >> action;
 		}
-	if (action == "entryway"){
-		if ((last == 11)&&(never_look_back == 1))
+	if (action == "dining_room"){
+		if ((last == 17)&&(never_look_back == 1))
 			cout << "you were just there, and you never look back" << endl;
 		else{
 			last = room;
-			return 11;
+			return 17;
 		}
 	}
 	else if (action == "living_room"){
@@ -271,8 +275,8 @@ int entryway(){
 	cout << "actions available: "; 
 	if (last != 7)
 		cout << "bedroom, ";
-	if (last != 3)
-		cout << "kitchen, ";
+	if (last != 17)
+		cout << "dining_room, ";
 	if (last != 2)
 		cout << "living_room, ";
 	cout << "exit, gas" << endl;
@@ -300,12 +304,12 @@ int entryway(){
 				return 2;
 			}
 		}
-		else if (action == "kitchen"){
-			if ((last == 3)&&(never_look_back == 1))
+		else if (action == "dining_room"){
+			if ((last == 17)&&(never_look_back == 1))
 				cout << "you were just there, and you never look back" << endl;
 			else{
 				last = room;
-				return 3;
+				return 17;
 			}
 		}
 		else if (action == "exit"){
@@ -318,3 +322,42 @@ int entryway(){
 			cout << "there is no doorway to the " << action << endl;
 	}while(1==1);
 }	
+
+int dining_room(){
+       if ((gassed % 17) == 0)
+		return 0;
+	cout << "you have enterd the dining_room" << endl << "you have " << cans << " gas canisters left" << endl;
+	cout << "actions available: "; 
+	if (last != 11)
+		cout << "entryway, ";
+	if (last != 3)
+		cout << "kitchen, ";
+	cout << "gas" << endl;
+	do{
+		cin >> action;
+		if ((action == "gas")&&((gassed % 17) != 0)){
+			gassed = gassed*17;
+			cans--;
+			cout << "the room has been gassed, you need to leave, where would you like to go?" << endl;
+			cin >> action;
+		}
+		if (action == "entryway"){
+			if ((last == 11)&&(never_look_back == 1))
+				cout << "you were just there, and you never look back" << endl;
+			else{
+				last = room;
+				return 11;
+			}
+		}
+		else if (action == "kitchen"){
+			if ((last == 3)&&(never_look_back == 1))
+				cout << "you were just there, and you never look back" << endl;
+			else{
+			       	last = room;
+				return 3;
+			}
+		}
+		else
+			cout << "there is no doorway to the " << action << endl;
+	}while(1==1);
+}
